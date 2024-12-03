@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Hackathon.App.Pages.Controls"
+             xmlns:pageModels="clr-namespace:Hackathon.App.PageModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Hackathon.App.Pages.DocumentsPage"
+             x:DataType="pageModels:DocumentsPageViewModel">
+    
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"                
+            Command="{Binding ReloadCommand}" />
+    </ContentPage.Behaviors>
+    
+    <Grid>
+        <ListView ItemsSource="{Binding Documents}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="1"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"
+                                   TextColor="Azure"/>
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Size}"
+                                   FontAttributes="Italic"
+                                   VerticalOptions="End" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+            
+        <controls:AddButton Command="{Binding UploadCommand}" />
+    </Grid>
+    
+</ContentPage>
