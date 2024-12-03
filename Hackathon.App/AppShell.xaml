@@ -6,9 +6,14 @@
     xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
     xmlns:pages="clr-namespace:Hackathon.App.Pages"
     FlyoutBehavior="Flyout"
-    
     Title="Hackathon.App">
 
+    <ShellContent
+        Title="Projects"
+        Icon="{StaticResource IconProjects}"
+        ContentTemplate="{DataTemplate pages:ProjectListPage}"
+        Route="projects" />
+    
     <ShellContent
         Title="Documents"
         Icon="{StaticResource IconDashboard}"
@@ -20,12 +25,6 @@
         Icon="{StaticResource IconDashboard}"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="main" />
-
-    <ShellContent
-        Title="Projects"
-        Icon="{StaticResource IconProjects}"
-        ContentTemplate="{DataTemplate pages:ProjectListPage}"
-        Route="projects" />
 
     <ShellContent
         Title="Manage Meta"
