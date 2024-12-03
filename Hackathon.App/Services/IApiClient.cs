@@ -1,4 +1,4 @@
-using Contracts;
+using Hackathon.App.Models;
 using Refit;
 
 namespace Hackathon.App.Services;

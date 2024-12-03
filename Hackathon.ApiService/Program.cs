@@ -29,8 +29,8 @@ app.UseExceptionHandler();
 
 app.MapPost("/documents", async (IMediator mediator, IFormFile file) =>
 {
-    var id = await mediator.Send(new UploadDocumentCommand(file));
-    return Results.Created($"/documents/{id}", null);
+    var document = await mediator.Send(new UploadDocumentCommand(file));
+    return Results.Created($"/documents/{document.Id}", document);
 }).DisableAntiforgery();
 
 app.MapGet("/documents/{documentId:guid}", async (IMediator mediator, Guid documentId) =>
