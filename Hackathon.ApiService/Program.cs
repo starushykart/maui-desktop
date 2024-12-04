@@ -1,6 +1,9 @@
 using Hackathon.ApiService.Common.HostedServices;
 using Hackathon.ApiService.Common.Mediatr;
+using Hackathon.ApiService.Features.DeleteDocumentById;
+using Hackathon.ApiService.Features.GetAllDocuments;
 using Hackathon.ApiService.Features.GetDocumentById;
+using Hackathon.ApiService.Features.PatchDocumentById;
 using Hackathon.ApiService.Features.UploadDocument;
 using Hackathon.ApiService.Persistence;
 using Hackathon.ApiService.Services.FileStorage;
@@ -37,6 +40,24 @@ app.MapGet("/documents/{documentId:guid}", async (IMediator mediator, Guid docum
 {
     var document = await mediator.Send(new GetDocumentByIdRequest(documentId));
     return document == null ? Results.NotFound() : Results.Ok(document);
+});
+
+app.MapGet("/documents", async (IMediator mediator) =>
+{
+    var documents = await mediator.Send(new GetAllDocumentsRequest());
+    return Results.Ok(documents);
+});
+
+app.MapDelete("/documents/{documentId:guid}", async (IMediator mediator, Guid documentId) =>
+{
+    await mediator.Send(new DeleteDocumentByIdRequest(documentId));
+    return Results.NoContent;
+});
+
+app.MapPatch("/documents/{documentId:guid}", async (IMediator mediator, Guid documentId, PatchDocumentByIdRequest request) =>
+{
+    await mediator.Send(request with { Id = documentId });
+    return Results.NoContent;
 });
 
 app.MapDefaultEndpoints();
