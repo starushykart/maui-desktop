@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.LifecycleEvents;
 using Refit;
 using Syncfusion.Maui.Toolkit.Hosting;
 
@@ -22,6 +23,45 @@ public static class MauiProgram
                 fonts.AddFont("SegoeUI-Semibold.ttf", "SegoeSemibold");
                 fonts.AddFont("FluentSystemIcons-Regular.ttf", FluentUI.FontFamily);
             });
+
+
+        builder.ConfigureLifecycleEvents(lifecycle =>
+        {
+#if WINDOWS
+            lifecycle.AddWindows(lifecycleBuilder => lifecycleBuilder.OnWindowCreated(window =>
+            {
+                window.ExtendsContentIntoTitleBar = false;
+                var handle = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                var id = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(handle);
+                var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(id);
+
+                Platforms.Windows.WindowExtensions.Hwnd = handle;
+
+                var trayService = new Platforms.Windows.TrayService();
+                trayService.Initialize();
+
+                appWindow.Closing += async (_, e) =>
+                {
+                    var mainPage = Application.Current?.Windows[0].Page;
+                    if (mainPage == null)
+                        return;
+
+                    e.Cancel = true;
+
+                    var result = await mainPage.DisplayAlert(
+                        "Closing the application",
+                        "Do you really want to quit?",
+                        "Close",
+                        "Minimize to system tray")!;
+
+                    if (result)
+                        Application.Current!.Quit();
+
+                    Platforms.Windows.WindowExtensions.MinimizeToTray();
+                };
+            }));
+#endif
+        });
 
 #if DEBUG
         builder.Logging.AddDebug();
