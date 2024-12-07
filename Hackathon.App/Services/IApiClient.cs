@@ -1,4 +1,4 @@
-using Contracts;
+using Hackathon.App.Models;
 using Refit;
 
 namespace Hackathon.App.Services;
@@ -20,4 +20,7 @@ public interface IApiClient
 
     [Patch("/documents/{documentId}")]
     Task PatchByIdAsync(Guid documentId, [Body] string? name, CancellationToken ct = default);
+
+    [Get("/ping")]
+    Task PingAsync();
 }
