@@ -1,5 +1,4 @@
-using ByteSizeLib;
-using Contracts;
+using Hackathon.ApiService.Models;
 using Hackathon.ApiService.Persistence;
 using Hackathon.ApiService.Persistence.Entities;
 using Hackathon.ApiService.Services.FileStorage;
@@ -26,7 +25,7 @@ public class UploadDocumentCommandHandler(
             Id = NewId.NextSequentialGuid(),
             Key = key,
             Name = request.File.FileName,
-            Size = ByteSize.FromBytes(request.File.Length)
+            Size = request.File.Length
         };
 
         context.Documents.Add(documentInfo);
@@ -36,7 +35,7 @@ public class UploadDocumentCommandHandler(
         {
             Id = documentInfo.Id,
             Name = documentInfo.Name,
-            Size = documentInfo.Size.Bytes
+            Size = documentInfo.Size
         };
 
         await actionsReporter.NotifyDocumentUploadedAsync(document, cancellationToken);

@@ -20,10 +20,9 @@
     <Grid>
         <ScrollView>
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="{StaticResource LayoutPadding}">
-                <sf:SfTextInputLayout 
-                    Hint="Task">
-                    <Entry
-                        Text="{Binding Title}" />
+                
+                <sf:SfTextInputLayout Hint="Task" >
+                    <Entry Text="{Binding Title}" />
                 </sf:SfTextInputLayout>
 
                 <sf:SfTextInputLayout 

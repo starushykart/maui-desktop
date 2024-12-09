@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
+using Hackathon.App.Services.Background;
 using Microsoft.Extensions.Logging;
 using Refit;
+using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace Hackathon.App;
@@ -9,10 +11,14 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH1edHRSRWlcWExwWUo=");
+
         var builder = MauiApp.CreateBuilder();
+        
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .ConfigureSyncfusionCore()
             .ConfigureSyncfusionToolkit()
             .ConfigureMauiHandlers(handlers => { })
             .ConfigureFonts(fonts =>
@@ -28,8 +34,13 @@ public static class MauiProgram
         builder.Services.AddLogging(configure => configure.AddDebug());
 #endif
 
-        builder.Services.AddRefitClient<IApiClient>()
+        builder.Services
+            .AddSingleton<ApiClientService>()
+            .AddRefitClient<IApiClient>()
             .ConfigureHttpClient(x => x.BaseAddress = new Uri(App.BaseApiUrl));
+
+        builder.Services.AddSingleton<OfflineTasksService>();
+        builder.Services.AddSingleton<SyncService>();
 
         builder.Services.AddSingleton<DocumentsPageViewModel>();
         builder.Services.AddSingleton<ProjectRepository>();
@@ -40,19 +51,31 @@ public static class MauiProgram
         builder.Services.AddSingleton<ModalErrorHandler>();
         builder.Services.AddSingleton<MainPageModel>();
         builder.Services.AddSingleton<ProjectListPageModel>();
+        builder.Services.AddSingleton<OfflineTasksPageViewModel>();
+
         builder.Services.AddSingleton<ManageMetaPageModel>();
 
-        builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
+        builder.Services.AddSingletonWithShellRoute<DocumentsPage, DocumentsPageViewModel>("documents");
+        builder.Services.AddSingletonWithShellRoute<OfflineTasksPage, OfflineTasksPageViewModel>("offline-tasks");
         builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
 
 #if MACCATALYST
         AddMacPlatformSpecificServices(builder);
+#elif WINDOWS
+        AddWindowsPlatformSpecificServices(builder);
 #endif
-
         return builder.Build();
+    }
+    
+    private static void AddWindowsPlatformSpecificServices(MauiAppBuilder? builder)
+    {
+        if (builder == null)
+            return;
     }
 
     private static void AddMacPlatformSpecificServices(MauiAppBuilder? builder)
     {
+        if (builder == null)
+            return;
     }
 }

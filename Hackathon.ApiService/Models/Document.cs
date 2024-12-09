@@ -1,8 +1,8 @@
-namespace Contracts;
+namespace Hackathon.ApiService.Models;
 
 public class Document
 {
     public required Guid Id { get; set; }
     public required string Name { get; set; }
-    public required double Size { get; set; }
+    public required long Size { get; set; }
 }

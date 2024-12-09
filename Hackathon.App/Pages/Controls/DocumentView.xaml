@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<SwipeView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:effectsView="clr-namespace:Syncfusion.Maui.Toolkit.EffectsView;assembly=Syncfusion.Maui.Toolkit"
+           xmlns:models="clr-namespace:Hackathon.App.Models"
+           xmlns:pageModels="clr-namespace:Hackathon.App.PageModels"
+           xmlns:utilities="clr-namespace:Hackathon.App.Utilities"
+           x:Class="Hackathon.App.Pages.Controls.DocumentView"
+           x:DataType="models:Document">
+   
+    <SwipeView.RightItems>
+        <SwipeItem Text="Download"
+                   Command="{Binding DownloadCommand, Source={RelativeSource AncestorType={x:Type pageModels:DocumentsPageViewModel}}}"
+                   CommandParameter="{Binding .}"/>
+        <SwipeItem Text="Delete" 
+                   Command="{Binding RemoveCommand, Source={RelativeSource AncestorType={x:Type pageModels:DocumentsPageViewModel}}}"
+                   CommandParameter="{Binding .}"/>
+    </SwipeView.RightItems>
+    
+    <Border >
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20"/>
+        </Border.StrokeShape>
+        
+        <FlyoutBase.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Download"
+                                Command="{Binding DownloadCommand, Source={RelativeSource AncestorType={x:Type pageModels:DocumentsPageViewModel}}}"
+                                CommandParameter="{Binding .}" />
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Text="Delete" 
+                                Command="{Binding RemoveCommand, Source={RelativeSource AncestorType={x:Type pageModels:DocumentsPageViewModel}}}"
+                                CommandParameter="{Binding .}" />
+            </MenuFlyout>
+        </FlyoutBase.ContextFlyout>
+        
+        <effectsView:SfEffectsView
+            TouchDownEffects="Highlight"
+            HighlightBackground="{AppThemeBinding Light={StaticResource DarkOnLightBackground}, Dark={StaticResource LightOnDarkBackground}}">
+            <Grid ColumnDefinitions="Auto,*,*" ColumnSpacing="15" Padding="{OnIdiom 15, Desktop=20}">
+                <CheckBox Grid.Column="0" IsChecked="{Binding IsChecked, Mode=OneTime}" VerticalOptions="Center" CheckedChanged="OnChecked"/>
+                <Entry Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" VerticalOptions="Center" IsReadOnly="true" />
+                <Entry Grid.Column="2" Text="{Binding Size, Converter={utilities:SizeToStringConverter}}" VerticalOptions="Center" IsReadOnly="true" />
+            </Grid>
+        </effectsView:SfEffectsView>
+        
+    </Border>
+</SwipeView>

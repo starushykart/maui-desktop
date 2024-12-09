@@ -8,5 +8,6 @@ public class ProjectTask
     public string Title { get; set; } = string.Empty;
     public bool IsCompleted { get; set; }
 
-    [JsonIgnore] public int ProjectID { get; set; }
+    [JsonIgnore]
+    public int ProjectID { get; set; }
 }

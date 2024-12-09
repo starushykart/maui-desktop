@@ -1,4 +1,3 @@
-using System.Reflection;
 using Amazon.S3;
 using LocalStack.Client.Extensions;
 

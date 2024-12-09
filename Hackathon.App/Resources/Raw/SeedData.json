@@ -1,8 +1,8 @@
 {
     "Projects": [
         {
-            "Name": "Balance",
-            "Description": "Improve work-life balance.",
+            "Name": "Procter & Gamble",
+            "Description": "Last session: 1 min ago",
             "Icon": "\uea28",
             "Category": { "Title": "work", "Color": "#3068df" },
             "Tags": [
@@ -15,8 +15,8 @@
             ]
         },
         {
-            "Name": "Personal",
-            "Description": "Learn to speak another language.",
+            "Name": "Project Chorus",
+            "Description": "Last session: 40 min ago",
             "Icon": "\uf8fe",
             "Category": { "Title": "education", "Color": "#8800FF" },
             "Tags": [
@@ -29,8 +29,8 @@
             ]
         },
         {
-            "Name": "Fitness",
-            "Description": "Promote health and fitness activities",
+            "Name": "Right Wing",
+            "Description": "Last session: 36 years ago",
             "Icon": "\uf837",
             "Category": { "Title": "self", "Color": "#FF3300" },
             "Tags": [
@@ -43,8 +43,8 @@
             ]
         },
         {
-            "Name": "Family and Friends",
-            "Description": "Strengthen relationships with family and friends.",
+            "Name": "Dyson",
+            "Description": "Last session: always",
             "Icon": "\uf5a9",
             "Category": { "Title": "relationships", "Color": "#FF9900" },
             "Tags": [

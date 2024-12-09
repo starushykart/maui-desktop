@@ -1,4 +1,4 @@
-using Contracts;
+using Hackathon.ApiService.Models;
 using MediatR;
 
 namespace Hackathon.ApiService.Features.UploadDocument;

@@ -1,7 +1,4 @@
-﻿using Hackathon.App.Models;
-using Hackathon.App.PageModels;
-
-namespace Hackathon.App.Pages;
+﻿namespace Hackathon.App.Pages;
 
 public partial class MainPage : ContentPage
 {

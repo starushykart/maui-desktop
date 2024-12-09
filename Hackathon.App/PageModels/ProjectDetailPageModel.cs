@@ -187,7 +187,6 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
         }
 
         await Shell.Current.GoToAsync("..");
-        await AppShell.DisplayToastAsync("Project saved");
     }
 
     [RelayCommand]
@@ -221,7 +220,6 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 
         await _projectRepository.DeleteItemAsync(_project);
         await Shell.Current.GoToAsync("..");
-        await AppShell.DisplayToastAsync("Project deleted");
     }
 
     [RelayCommand]
@@ -260,6 +258,5 @@ public partial class ProjectDetailPageModel : ObservableObject, IQueryAttributab
 
         Tasks = new(Tasks);
         OnPropertyChanged(nameof(HasCompletedTasks));
-        await AppShell.DisplayToastAsync("All cleaned up!");
     }
 }

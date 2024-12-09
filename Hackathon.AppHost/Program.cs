@@ -7,6 +7,7 @@ var localstack = builder
 
 var postgres = builder
     .AddPostgres("postgres")
+    .WithDataVolume(isReadOnly: false)
     .WithPgWeb();
 
 var database = postgres.AddDatabase("hackathonDb");

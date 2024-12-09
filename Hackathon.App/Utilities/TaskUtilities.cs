@@ -1,5 +1,3 @@
-using Hackathon.App.Services;
-
 namespace Hackathon.App.Utilities;
 
 /// <summary>
@@ -22,5 +20,12 @@ public static class TaskUtilities
         {
             handler?.HandleError(ex);
         }
+    }
+    
+    public static async Task OnUIThreadAsync(Action act)
+    {
+        var dispatcher = Application.Current?.Dispatcher;
+        if (dispatcher != null)
+            await dispatcher.DispatchAsync(act);
     }
 }

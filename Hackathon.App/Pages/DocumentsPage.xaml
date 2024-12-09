@@ -1,49 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Hackathon.App.Pages.Controls"
              xmlns:pageModels="clr-namespace:Hackathon.App.PageModels"
+             xmlns:models="clr-namespace:Hackathon.App.Models"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:shimmer="clr-namespace:Syncfusion.Maui.Toolkit.Shimmer;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+             xmlns:utilities="clr-namespace:Hackathon.App.Utilities"
              x:Class="Hackathon.App.Pages.DocumentsPage"
-             x:DataType="pageModels:DocumentsPageViewModel">
+             x:DataType="pageModels:DocumentsPageViewModel"
+             Title="Documents">
+
+        <ContentPage.Behaviors>
+            <toolkit:EventToCommandBehavior
+                EventName="Appearing"
+                Command="{Binding RefreshCommand}" />
+        </ContentPage.Behaviors>
     
-    <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior
-            EventName="Appearing"                
-            Command="{Binding ReloadCommand}" />
-    </ContentPage.Behaviors>
+        <ContentPage.MenuBarItems>
+            <MenuBarItem Text="Something good">
+                <MenuFlyoutSubItem Text="Something very good">
+                    <MenuFlyoutSubItem Text="Are you ready?">
+                        <MenuFlyoutSubItem Text="Yes!">
+                            <MenuFlyoutItem Text="Set sync folder" Command="{Binding SetSyncFolderCommand}" />
+                            <MenuFlyoutItem Text="Open sync folder" Command="{Binding OpenSyncFolderCommand}" />
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="No!">
+                            <MenuFlyoutSubItem Text="Then it's the end">
+                                <MenuFlyoutItem Text="Rly, that's it!" />
+                            </MenuFlyoutSubItem>
+                        </MenuFlyoutSubItem>
+                    </MenuFlyoutSubItem>
+                </MenuFlyoutSubItem>
+            </MenuBarItem>
+        </ContentPage.MenuBarItems>
     
-    <Grid>
-        <ListView ItemsSource="{Binding Documents}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="1"
-                                   Text="{Binding Name}"
-                                   FontAttributes="Bold"
-                                   TextColor="Azure"/>
-                            <Label Grid.Row="1"
-                                   Grid.Column="1"
-                                   Text="{Binding Size}"
-                                   FontAttributes="Italic"
-                                   VerticalOptions="End" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid Padding="{StaticResource LayoutPadding}">
+                <shimmer:SfShimmer
+                    BackgroundColor="Transparent"
+                    VerticalOptions="FillAndExpand"
+                    Type="Shopping"
+                    IsActive="{Binding IsRefreshing}">
+                        <shimmer:SfShimmer.Content>
+                            <VerticalStackLayout 
+                                BindableLayout.ItemsSource="{Binding Documents}" 
+                                Margin="{StaticResource LayoutPadding}" 
+                                Spacing="{StaticResource LayoutSpacing}">
+                                
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Document">
+                                        <controls:DocumentView />
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </shimmer:SfShimmer.Content>
+                    </shimmer:SfShimmer>
             
-        <controls:AddButton Command="{Binding UploadCommand}" />
-    </Grid>
+            <progressBar:SfLinearProgressBar
+                BackgroundColor="Transparent"
+                IsEnabled="{Binding IsUploading}"
+                IsVisible="{Binding IsUploading}"
+                HeightRequest="10"
+                WidthRequest="600" 
+                VerticalOptions="End" 
+                HorizontalOptions="Center"
+                Progress="{Binding UploadProgress}"/>
+            
+
+            <!-- <Button ImageSource="{StaticResource IconSave}"  -->
+            <!--         BackgroundColor="{StaticResource Primary}"  -->
+            <!--         CornerRadius="30"  -->
+            <!--         HeightRequest="60"  -->
+            <!--         WidthRequest="60"  -->
+            <!--         VerticalOptions="End"  -->
+            <!--         HorizontalOptions="End" -->
+            <!--         Margin="30" /> -->
+            
+            <controls:AddButton Command="{Binding UploadCommand}" IsVisible="{Binding IsUploading, Converter={utilities:InverseBoolConverter}}" />
+        </Grid>
     
 </ContentPage>

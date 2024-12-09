@@ -8,7 +8,11 @@ public class S3HostedService(IAmazonS3 client, IOptions<S3Configuration> config,
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await client.PutBucketAsync(config.Value.Bucket, cancellationToken);
+        var buckets = await client.ListBucketsAsync(cancellationToken);
+        
+        if (buckets.Buckets.All(x => x.BucketName != config.Value.Bucket)) 
+            await client.PutBucketAsync(config.Value.Bucket, cancellationToken);
+        
         logger.LogInformation("S3 bucket {Bucket} created", config.Value.Bucket);
     }
 

@@ -1,8 +1,18 @@
-namespace Contracts;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-public class Document
+namespace Hackathon.App.Models;
+
+public partial class Document : ObservableObject
 {
-    public required Guid Id { get; set; }
-    public required string Name { get; set; }
-    public required double Size { get; set; }
+    [ObservableProperty]
+    private Guid _id;
+
+    [ObservableProperty]
+    private string _name = null!;
+
+    [ObservableProperty]
+    private long _size;
+    
+    [ObservableProperty]
+    private bool _isChecked;
 }

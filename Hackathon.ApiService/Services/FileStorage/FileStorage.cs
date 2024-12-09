@@ -17,4 +17,14 @@ public class FileStorage(IAmazonS3 client, IOptions<S3Configuration> config) : I
 
         return key;
     }
+    
+    public async Task<Stream> DownloadAsync(string key, CancellationToken ct)
+    {
+        var stream = await _utility.OpenStreamAsync(config.Value.Bucket, key, ct);
+
+        if (stream == null)
+            throw new FileNotFoundException();
+
+        return stream;
+    }
 }

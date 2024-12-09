@@ -1,4 +1,4 @@
-using Contracts;
+using Hackathon.ApiService.Models;
 
 namespace Hackathon.ApiService.Services.SignalR;
 

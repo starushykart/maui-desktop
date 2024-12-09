@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using Contracts;
+using Hackathon.App.Models;
 
 namespace Hackathon.App.Utilities;
 

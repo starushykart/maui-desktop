@@ -1,9 +1,7 @@
 #nullable disable
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Hackathon.App.Data;
 using Hackathon.App.Models;
-using Hackathon.App.Services;
 
 namespace Hackathon.App.PageModels;
 
@@ -11,7 +9,8 @@ public partial class ProjectListPageModel : ObservableObject
 {
     private readonly ProjectRepository _projectRepository;
 
-    [ObservableProperty] private List<Project> _projects = [];
+    [ObservableProperty]
+    private List<Project> _projects = [];
 
     public ProjectListPageModel(ProjectRepository projectRepository)
     {

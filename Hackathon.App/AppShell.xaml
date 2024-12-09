@@ -5,9 +5,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
     xmlns:pages="clr-namespace:Hackathon.App.Pages"
+    xmlns:utilities="clr-namespace:Hackathon.App.Utilities"
+    xmlns:local="clr-namespace:Hackathon.App"
     FlyoutBehavior="Flyout"
+    x:DataType="local:AppData"
     Title="Hackathon.App">
 
+    <Shell.FlyoutHeader>
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Online" />
+            <ActivityIndicator IsRunning="True"
+                               IsVisible="True"
+                               Color = "{Binding IsOnline, Converter={utilities:BoolToColorConverter}}" />
+        </HorizontalStackLayout>
+    </Shell.FlyoutHeader>
+    
     <ShellContent
         Title="Projects"
         Icon="{StaticResource IconProjects}"
@@ -21,20 +33,26 @@
         Route="documents" />
     
     <ShellContent
-        Title="Dashboard"
-        Icon="{StaticResource IconDashboard}"
+        Title="Offline tasks"
+        Icon="{StaticResource IconOfflineTasks}"
+        ContentTemplate="{DataTemplate pages:OfflineTasksPage}"
+        Route="offline-tasks" />
+    
+    <ShellContent
+        Title="Archives"
+        Icon="{StaticResource IconArchives}"
+        ContentTemplate="{DataTemplate pages:ManageMetaPage}"
+        Route="manage" />
+    
+    <ShellContent
+        Title="Activity log"
+        Icon="{StaticResource IconReports}"
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="main" />
 
-    <ShellContent
-        Title="Manage Meta"
-        Icon="{StaticResource IconMeta}"
-        ContentTemplate="{DataTemplate pages:ManageMetaPage}"
-        Route="manage" />
-
     <Shell.FlyoutFooter>
         <Grid Padding="15">
-            <sf:SfSegmentedControl x:Name="ThemeSegmentedControl" 
+            <sf:SfSegmentedControl x:Name="ThemeSegmentedControl"
                 VerticalOptions="Center" HorizontalOptions="Center" SelectionChanged="SfSegmentedControl_SelectionChanged"
                 SegmentWidth="40" SegmentHeight="40">
                 <sf:SfSegmentedControl.ItemsSource>

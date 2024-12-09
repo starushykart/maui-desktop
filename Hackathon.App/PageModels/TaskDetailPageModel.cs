@@ -1,8 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Hackathon.App.Data;
 using Hackathon.App.Models;
-using Hackathon.App.Services;
 
 namespace Hackathon.App.PageModels;
 
@@ -140,9 +138,6 @@ public partial class TaskDetailPageModel : ObservableObject, IQueryAttributable
             _taskRepository.SaveItemAsync(_task).FireAndForgetSafeAsync(_errorHandler);
 
         await Shell.Current.GoToAsync("..?refresh=true");
-
-        if (_task.ID > 0)
-            await AppShell.DisplayToastAsync("Task saved");
     }
 
     [RelayCommand(CanExecute = nameof(CanDelete))]
@@ -163,6 +158,5 @@ public partial class TaskDetailPageModel : ObservableObject, IQueryAttributable
             await _taskRepository.DeleteItemAsync(_task);
 
         await Shell.Current.GoToAsync("..?refresh=true");
-        await AppShell.DisplayToastAsync("Task deleted");
     }
 }

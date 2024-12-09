@@ -1,8 +1,8 @@
-using Contracts;
+using Hackathon.ApiService.Models;
 
 namespace Hackathon.ApiService.Services.SignalR;
 
 public interface IDocumentsNotificationsClient
 {
-    Task DocumentUploaded(Document document, CancellationToken cancellationToken = default);
+    Task DocumentUpdated(Document document, CancellationToken cancellationToken = default);
 }

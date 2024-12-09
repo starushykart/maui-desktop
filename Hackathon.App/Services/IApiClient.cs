@@ -21,6 +21,9 @@ public interface IApiClient
     [Patch("/documents/{documentId}")]
     Task PatchByIdAsync(Guid documentId, [Body] string? name, CancellationToken ct = default);
 
+    [Get("/documents/{documentId}/content")]
+    Task<Stream> DownloadAsync(Guid documentId, CancellationToken ct = default);
+    
     [Get("/ping")]
     Task PingAsync();
 }

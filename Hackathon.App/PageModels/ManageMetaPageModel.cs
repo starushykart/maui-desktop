@@ -1,9 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Hackathon.App.Data;
 using Hackathon.App.Models;
-using Hackathon.App.Services;
 
 namespace Hackathon.App.PageModels;
 
@@ -46,8 +44,6 @@ public partial class ManageMetaPageModel : ObservableObject
         {
             await _categoryRepository.SaveItemAsync(category);
         }
-
-        await AppShell.DisplayToastAsync("Categories saved");
     }
 
     [RelayCommand]
@@ -55,7 +51,6 @@ public partial class ManageMetaPageModel : ObservableObject
     {
         Categories.Remove(category);
         await _categoryRepository.DeleteItemAsync(category);
-        await AppShell.DisplayToastAsync("Category deleted");
     }
 
     [RelayCommand]
@@ -64,7 +59,6 @@ public partial class ManageMetaPageModel : ObservableObject
         var category = new Category();
         Categories.Add(category);
         await _categoryRepository.SaveItemAsync(category);
-        await AppShell.DisplayToastAsync("Category added");
     }
 
     [RelayCommand]
@@ -74,8 +68,6 @@ public partial class ManageMetaPageModel : ObservableObject
         {
             await _tagRepository.SaveItemAsync(tag);
         }
-
-        await AppShell.DisplayToastAsync("Tags saved");
     }
 
     [RelayCommand]
@@ -83,7 +75,6 @@ public partial class ManageMetaPageModel : ObservableObject
     {
         Tags.Remove(tag);
         await _tagRepository.DeleteItemAsync(tag);
-        await AppShell.DisplayToastAsync("Tag deleted");
     }
 
     [RelayCommand]
@@ -92,7 +83,6 @@ public partial class ManageMetaPageModel : ObservableObject
         var tag = new Tag();
         Tags.Add(tag);
         await _tagRepository.SaveItemAsync(tag);
-        await AppShell.DisplayToastAsync("Tag added");
     }
 
     [RelayCommand]
